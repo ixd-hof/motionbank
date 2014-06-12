@@ -25,8 +25,8 @@ void draw()
 {
   background(0);
 
-  fill(100);
-  rect(0, 0, width, height);
+  //fill(100);
+  //rect(0, 0, width, height);
 
   sk.update();
   println(sk.index);
@@ -37,8 +37,8 @@ void draw()
   fill(255);
   noStroke();
   
-  rotateX(PI/2.0);
-  translate(width/2, 100, -height/2);
+  //rotateX(PI/2.0);
+  //translate(width/2, 100, -height/2);
   
   pushMatrix();
   translate(sk.SKELETON_POSITION_HEAD.x*100, sk.SKELETON_POSITION_HEAD.y*100, sk.SKELETON_POSITION_HEAD.z*100);

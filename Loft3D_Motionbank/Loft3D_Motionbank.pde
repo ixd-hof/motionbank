@@ -5,7 +5,8 @@ PeasyCam cam;
 String [] data;
 int index = 0;
 float distanz;
-float res = 6.0;
+float res = 6;
+float px0, py0, px1, py1, px2, py2, px3, py3;
 
 void setup()
 {
@@ -16,7 +17,7 @@ void setup()
   background(0);
 
   cam = new PeasyCam(this, 500);
-  cam.setMinimumDistance(50);
+  cam.setMinimumDistance(0);
   cam.setMaximumDistance(1000);
   cam.lookAt(0, 0, 0);
 }
@@ -28,8 +29,10 @@ void draw()
   //fill(100);
   //rect(0, 0, width, height);
 
-  int step = 100;
-  int h = 0;
+  scale(4);
+
+  int step = 400;
+  float h = 0;
   for (int i=0; i<data.length-2*step; i+=step) // oder += step
   {
     // First point
@@ -64,18 +67,19 @@ void draw()
     // y = cy + r * sin(a)
 
     float step_r = 2*PI/res;
-    for (int r=0; r<2*PI; r+=step_r)
+    for (float r=0; r<2*PI; r+=step_r)
     {
-      float px0 = d * cos(r);
-      float py0 = d * sin(r);
-      float px1 = d * cos(r+step_r);
-      float py1 = d * sin(r+step_r);
-      float px2 = d2 * cos(r+step_r);
-      float py2 = d2 * sin(r+step_r);
-      float px3 = d2 * cos(r);
-      float py3 = d2 * sin(r);
+      px0 = d * cos(r);
+      py0 = d * sin(r);
+      px1 = d * cos(r+step_r);
+      py1 = d * sin(r+step_r);
+      px2 = d2 * cos(r+step_r);
+      py2 = d2 * sin(r+step_r);
+      px3 = d2 * cos(r);
+      py3 = d2 * sin(r);
 
-      noFill();
+      //noFill();
+      fill(255, 100);
       stroke(255);
       beginShape(QUADS);
       vertex(px0, h, py0);
@@ -83,8 +87,24 @@ void draw()
       vertex(px2, h+d, py2);
       vertex(px3, h+d, py3);
       endShape(CLOSE);
+
+      // start cap
+      if (i==0)
+      {
+        beginShape();
+        vertex(px0, h, py0);
+        vertex(px1, h, py1);
+        vertex(0, h, 0);
+        endShape(CLOSE);
+      }
     }
     h += d;
   }
+  // stop cap
+  beginShape();
+  vertex(px0, h, py0);
+  vertex(px1, h, py1);
+  vertex(0, h, 0);
+  endShape(CLOSE);
 }
 
